@@ -2,6 +2,8 @@ package com.demo.mapper;
 
 import com.demo.model.Addresslist;
 
+import java.util.List;
+
 public interface AddresslistMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,6 @@ public interface AddresslistMapper {
     int updateByPrimaryKeySelective(Addresslist record);
 
     int updateByPrimaryKey(Addresslist record);
+
+    List<Addresslist> selectAddress();
 }

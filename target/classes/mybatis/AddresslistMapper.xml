@@ -68,4 +68,9 @@
       phone = #{phone,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectAddress" resultType="com.demo.model.Addresslist">
+    select
+    <include refid="Base_Column_List"/>
+    from addresslist
+  </select>
 </mapper>
