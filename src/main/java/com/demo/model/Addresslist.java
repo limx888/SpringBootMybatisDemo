@@ -1,5 +1,11 @@
 package com.demo.model;
 
+import javax.persistence.Entity;
+
+/**
+ * @author bocs
+ */
+@Entity(name = "addresslist")
 public class Addresslist {
     private Integer id;
 
