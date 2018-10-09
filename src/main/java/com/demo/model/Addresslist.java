@@ -5,7 +5,6 @@ import javax.persistence.Entity;
 /**
  * @author bocs
  */
-@Entity(name = "addresslist")
 public class Addresslist {
     private Integer id;
 
