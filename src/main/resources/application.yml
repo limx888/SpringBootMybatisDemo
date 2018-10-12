@@ -1,7 +1,13 @@
 #默认使用配置
 spring:
   profiles:
-    active: dev
+    active: test
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database: mysql
+
 
   datasource:
     url: jdbc:mysql://localhost:3306/TESTDB?useSSL=false&amp;serverTimezone=UTC
@@ -11,6 +17,7 @@ spring:
 
     # 使用druid数据源
     type: org.apache.tomcat.jdbc.pool.DataSource
+
 
 #公共配置与profiles选择无关 mapperLocations指的路径是src/main/resources
 mybatis:
