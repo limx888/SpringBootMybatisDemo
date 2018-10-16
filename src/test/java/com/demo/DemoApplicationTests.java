@@ -1,5 +1,6 @@
 package com.demo;
 
+import com.demo.mapper.AddresslistMapper;
 import com.demo.model.Addresslist;
 import com.demo.repository.AddressRepository;
 import org.junit.Test;
@@ -24,6 +25,9 @@ public class DemoApplicationTests {
     @Autowired
     private AddressRepository addressRepository;
 
+    @Autowired
+    AddresslistMapper addresslistMapper;
+
     @Test
     public void contextLoads() {
 
@@ -32,7 +36,6 @@ public class DemoApplicationTests {
     /**
      * 下面的几个操作中，findAllByName，其它的都是继承自JpaRepository接口中的方法，更关键的是分页及排序是如此的简单实例化一个Pageable即可…
      */
-    @Test
     public void JpaRepositoryTest() {
         final Addresslist addresslist = addressRepository.save(new Addresslist("u1", "11122222222"));
         log.info("[添加成功] - [{}]", addresslist.toString());
@@ -46,6 +49,14 @@ public class DemoApplicationTests {
         log.info("[修改成功] - [{}]", edit.toString());
         addressRepository.deleteById(edit.getId());
         log.info("[删除主键为 {} 成功] - [{}]", edit.getId());
+    }
+
+    @Test
+    public void mybatisTest() throws Exception {
+        final int row1 = addresslistMapper.insert(new Addresslist("A1","2222222222"));
+        log.info("[添加结果] - [{}]", row1);
+        final List<Addresslist> addresslists = addresslistMapper.selectAddress();
+        log.info("[查询所有] - [{}]", addresslists.size());
     }
 
 }
