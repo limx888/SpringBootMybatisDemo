@@ -1,8 +1,11 @@
 package com.demo;
 
 import com.demo.mapper.AddresslistMapper;
+import com.demo.mapper.MybatisMapper;
 import com.demo.model.Addresslist;
 import com.demo.repository.AddressRepository;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -28,6 +31,9 @@ public class DemoApplicationTests {
     @Autowired
     AddresslistMapper addresslistMapper;
 
+    @Autowired
+    MybatisMapper mybatisMapper;
+
     @Test
     public void contextLoads() {
 
@@ -51,12 +57,30 @@ public class DemoApplicationTests {
         log.info("[删除主键为 {} 成功] - [{}]", edit.getId());
     }
 
-    @Test
     public void mybatisTest() throws Exception {
         final int row1 = addresslistMapper.insert(new Addresslist("A1","2222222222"));
         log.info("[添加结果] - [{}]", row1);
         final List<Addresslist> addresslists = addresslistMapper.selectAddress();
         log.info("[查询所有] - [{}]", addresslists.size());
+    }
+
+    @Test
+    public void mybatisPageHelperTest() throws Exception {
+        addresslistMapper.insert(new Addresslist("A1","2222222222"));
+        addresslistMapper.insert(new Addresslist("A1","2222222222"));
+        addresslistMapper.insert(new Addresslist("A1","2222222222"));
+        addresslistMapper.insert(new Addresslist("A1","2222222222"));
+        addresslistMapper.insert(new Addresslist("A1","2222222222"));
+        addresslistMapper.insert(new Addresslist("A1","2222222222"));
+        addresslistMapper.insert(new Addresslist("A1","2222222222"));
+        addresslistMapper.insert(new Addresslist("A1","2222222222"));
+
+        final PageInfo<Object> pageInfo = PageHelper.startPage( 1, 10 ).setOrderBy( "id desc" ).doSelectPageInfo( () -> this.mybatisMapper.selectAll());
+        log.info( "[lambda写法] - [分页信息] - [{}]", pageInfo.toString() );
+
+        PageHelper.startPage( 2, 10 ).setOrderBy( "id desc" );
+        final PageInfo<Addresslist> userPageInfo = new PageInfo<Addresslist>(this.mybatisMapper.selectAll());
+        log.info( "[普通写法] - [{}]", userPageInfo );
     }
 
 }
