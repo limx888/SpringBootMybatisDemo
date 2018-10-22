@@ -40,6 +40,7 @@ public class DemoApplicationTests {
     }
 
     /**
+     * 整合SpringDataJpa
      * 下面的几个操作中，findAllByName，其它的都是继承自JpaRepository接口中的方法，更关键的是分页及排序是如此的简单实例化一个Pageable即可…
      */
     public void JpaRepositoryTest() {
@@ -57,6 +58,10 @@ public class DemoApplicationTests {
         log.info("[删除主键为 {} 成功] - [{}]", edit.getId());
     }
 
+    /**
+     * 整合Mybatis
+     * @throws Exception
+     */
     public void mybatisTest() throws Exception {
         final int row1 = addresslistMapper.insert(new Addresslist("A1","2222222222"));
         log.info("[添加结果] - [{}]", row1);
@@ -64,17 +69,12 @@ public class DemoApplicationTests {
         log.info("[查询所有] - [{}]", addresslists.size());
     }
 
+    /**
+     * 通用Mapper与分页插件的集成
+     * @throws Exception
+     */
     @Test
     public void mybatisPageHelperTest() throws Exception {
-        addresslistMapper.insert(new Addresslist("A1","2222222222"));
-        addresslistMapper.insert(new Addresslist("A1","2222222222"));
-        addresslistMapper.insert(new Addresslist("A1","2222222222"));
-        addresslistMapper.insert(new Addresslist("A1","2222222222"));
-        addresslistMapper.insert(new Addresslist("A1","2222222222"));
-        addresslistMapper.insert(new Addresslist("A1","2222222222"));
-        addresslistMapper.insert(new Addresslist("A1","2222222222"));
-        addresslistMapper.insert(new Addresslist("A1","2222222222"));
-
         final PageInfo<Object> pageInfo = PageHelper.startPage( 1, 10 ).setOrderBy( "id desc" ).doSelectPageInfo( () -> this.mybatisMapper.selectAll());
         log.info( "[lambda写法] - [分页信息] - [{}]", pageInfo.toString() );
 
