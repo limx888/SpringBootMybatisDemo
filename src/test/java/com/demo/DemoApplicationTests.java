@@ -16,9 +16,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.Serializable;
 import java.util.List;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.stream.IntStream;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -33,6 +40,12 @@ public class DemoApplicationTests {
 
     @Autowired
     MybatisMapper mybatisMapper;
+
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
+    @Autowired
+    private RedisTemplate<String, Serializable> redisTemplate;
 
     @Test
     public void contextLoads() {
@@ -73,7 +86,6 @@ public class DemoApplicationTests {
      * 通用Mapper与分页插件的集成
      * @throws Exception
      */
-    @Test
     public void mybatisPageHelperTest() throws Exception {
         final PageInfo<Object> pageInfo = PageHelper.startPage( 1, 10 ).setOrderBy( "id desc" ).doSelectPageInfo( () -> this.mybatisMapper.selectAll());
         log.info( "[lambda写法] - [分页信息] - [{}]", pageInfo.toString() );
@@ -81,6 +93,24 @@ public class DemoApplicationTests {
         PageHelper.startPage( 2, 10 ).setOrderBy( "id desc" );
         final PageInfo<Addresslist> userPageInfo = new PageInfo<Addresslist>(this.mybatisMapper.selectAll());
         log.info( "[普通写法] - [{}]", userPageInfo );
+    }
+
+    @Test
+    public void redisTemplateTest() {
+        ExecutorService executorService = Executors.newFixedThreadPool(1000);
+        IntStream.range( 0, 1000 ).forEach( i ->
+                executorService.execute( () -> stringRedisTemplate.opsForValue().increment( "kk", 1 ))
+        );
+
+        stringRedisTemplate.opsForValue().set( "k1","v1" );
+        final String k1 = stringRedisTemplate.opsForValue().get( "k1" );
+        log.info( "[字符缓存结果] - [{}]", k1 );
+        // TODO 以下只演示整合，具体Redis命令可以参考官方文档，Spring Data Redis 只是改了名字而已，Redis支持的命令它都支持
+        String key = "battcn:user:1";
+        redisTemplate.opsForValue().set( key, new Addresslist( "Aaa", "12333333333" ) );
+        // TODO 对应String（字符串）
+        final Addresslist addresslist = (Addresslist) redisTemplate.opsForValue().get( key );
+        log.info( "[对应缓存结果] - [{}]", addresslist );
     }
 
 }

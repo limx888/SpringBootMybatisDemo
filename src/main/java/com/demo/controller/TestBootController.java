@@ -15,7 +15,7 @@ public class TestBootController {
     private UserService userService;
 
     @GetMapping(value = "/getAddress")
-    public Addresslist getUser(@RequestParam int id) {
+    public Addresslist getAddress(@RequestParam int id) {
         return userService.getAddressById(id);
     }
 
