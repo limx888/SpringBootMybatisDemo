@@ -1,5 +1,8 @@
 package com.demo.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -7,6 +10,7 @@ import java.io.Serializable;
  * @author bocs
  */
 @Entity(name = "addresslist")
+@ApiModel
 public class Addresslist implements Serializable {
     private static final long serialVersionUID = 8524935972870208583L;
     /**
@@ -17,8 +21,10 @@ public class Addresslist implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @ApiModelProperty("姓名")
     private String name;
 
+    @ApiModelProperty("手机号")
     private String phone;
 
     /**
