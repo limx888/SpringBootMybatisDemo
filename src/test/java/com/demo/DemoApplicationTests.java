@@ -122,13 +122,24 @@ public class DemoApplicationTests {
     /**
      * Rabbit Queue
      */
-    @Test
-    public void setAddressList() {
+    public void sendAddressList() {
         Addresslist addresslist = new Addresslist();
         addresslist.setName("lmx");
         addresslist.setPhone("12345678910");
         addresslist.setEmail("email@test.com");
         rabbitSender.sendAddressList(addresslist);
+    }
+
+    /**
+     * Rabbit Delay Queue
+     */
+    @Test
+    public void sendDelayAddressList() {
+        Addresslist addresslist = new Addresslist();
+        addresslist.setName("lmx");
+        addresslist.setPhone("12345678910");
+        addresslist.setEmail("email@test.com");
+        rabbitSender.sendDelayAddressList(addresslist);
     }
 
 }
