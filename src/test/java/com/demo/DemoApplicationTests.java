@@ -3,6 +3,7 @@ package com.demo;
 import com.demo.mapper.AddresslistMapper;
 import com.demo.mapper.MybatisMapper;
 import com.demo.model.Addresslist;
+import com.demo.rabbit.RabbitSender;
 import com.demo.repository.AddressRepository;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -46,6 +47,9 @@ public class DemoApplicationTests {
 
     @Autowired
     private RedisTemplate<String, Serializable> redisTemplate;
+
+    @Autowired
+    private RabbitSender rabbitSender;
 
     @Test
     public void contextLoads() {
@@ -95,7 +99,9 @@ public class DemoApplicationTests {
         log.info( "[普通写法] - [{}]", userPageInfo );
     }
 
-    @Test
+    /**
+     * redis缓存
+     */
     public void redisTemplateTest() {
         ExecutorService executorService = Executors.newFixedThreadPool(1000);
         IntStream.range( 0, 1000 ).forEach( i ->
@@ -111,6 +117,18 @@ public class DemoApplicationTests {
         // TODO 对应String（字符串）
         final Addresslist addresslist = (Addresslist) redisTemplate.opsForValue().get( key );
         log.info( "[对应缓存结果] - [{}]", addresslist );
+    }
+
+    /**
+     * Rabbit Queue
+     */
+    @Test
+    public void setAddressList() {
+        Addresslist addresslist = new Addresslist();
+        addresslist.setName("lmx");
+        addresslist.setPhone("12345678910");
+        addresslist.setEmail("email@test.com");
+        rabbitSender.sendAddressList(addresslist);
     }
 
 }
