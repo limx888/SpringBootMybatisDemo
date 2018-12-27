@@ -12,20 +12,4 @@ import org.springframework.stereotype.Component;
 public class Task {
     private String corn1;
     private String corn2;
-
-    public String getCorn1() {
-        return corn1;
-    }
-
-    public void setCorn1(String corn1) {
-        this.corn1 = corn1;
-    }
-
-    public String getCorn2() {
-        return corn2;
-    }
-
-    public void setCorn2(String corn2) {
-        this.corn2 = corn2;
-    }
 }
