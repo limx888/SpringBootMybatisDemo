@@ -10,7 +10,7 @@ import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
- * 日期格式验证
+ * 日期格式验证注解
  */
 @Target({FIELD, PARAMETER})
 @Retention(RUNTIME)
