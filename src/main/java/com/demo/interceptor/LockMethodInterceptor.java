@@ -1,5 +1,6 @@
 package com.demo.interceptor;
 
+import com.demo.annotation.LocalLock;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -26,7 +27,7 @@ public class LockMethodInterceptor {
             .expireAfterWrite(5, TimeUnit.SECONDS)
             .build();
 
-    @Around("execution(public * *(..)) && @annotation(com.demo.interceptor.LocalLock)")
+    @Around("execution(public * *(..)) && @annotation(com.demo.annotation.LocalLock)")
     public Object interceptor(ProceedingJoinPoint pjp) {
         MethodSignature signature = (MethodSignature) pjp.getSignature();
         Method method = signature.getMethod();

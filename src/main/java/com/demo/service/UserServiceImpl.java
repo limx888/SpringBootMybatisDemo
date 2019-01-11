@@ -47,7 +47,7 @@ public class UserServiceImpl implements UserService {
      * @param id
      * @return
      */
-    @CacheEvict(value = "addressList", key = "#id", allEntries = true, beforeInvocation = true)
+    @CacheEvict(value = "addressList", key = "#id", allEntries = false, beforeInvocation = true)
     @Override
     public int deleteById(int id) {
         log.info("根据userId删除地址信息");

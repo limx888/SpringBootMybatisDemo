@@ -1,6 +1,8 @@
 package com.demo;
 
 import com.demo.endpoint.MyEndPoint;
+import com.demo.interceptor.CacheKeyGenerator;
+import com.demo.interceptor.LockKeyGenerator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.actuate.autoconfigure.endpoint.condition.ConditionalOnEnabledEndpoint;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -47,5 +49,10 @@ public class DemoApplication {
         ThreadPoolTaskScheduler taskScheduler = new ThreadPoolTaskScheduler();
         taskScheduler.setPoolSize(10);
         return taskScheduler;
+    }
+
+    @Bean
+    public CacheKeyGenerator cacheKeyGenerator() {
+        return new LockKeyGenerator();
     }
 }

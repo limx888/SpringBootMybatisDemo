@@ -1,4 +1,4 @@
-package com.demo.interceptor;
+package com.demo.annotation;
 
 import java.lang.annotation.*;
 
