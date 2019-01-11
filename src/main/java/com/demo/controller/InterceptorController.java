@@ -19,7 +19,7 @@ public class InterceptorController {
     }
 
     @CacheLock(prefix = "books")
-    @GetMapping("redis")
+    @GetMapping("/redis")
     public String redisQuery(@CacheParam(name = "token") @RequestParam String token) {
         return "success - " + token;
     }
