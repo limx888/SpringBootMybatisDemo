@@ -1,0 +1,48 @@
+databaseChangeLog:
+  # 支持 yaml 格式的 SQL 语法
+  - changeSet:
+      id: 1
+      author: lmx
+      changes:
+        - createTable:
+            tableName: addresslist
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: name
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: phone
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 2
+      author: lmx
+      changes:
+        - insert:
+            tableName: addresslist
+            columns:
+              - column:
+                  name: name
+                  value: Marcel
+              - column:
+                  name: phone
+                  value: 11111111111
+  # 同时也支持依赖外部SQL文件（TODO 个人比较喜欢这种）
+  - changeSet:
+      id: 3
+      author: lmx
+      changes:
+        - sqlFile:
+            encoding: utf8
+            path: classpath:db/changelog/sqlfile/test1.sql

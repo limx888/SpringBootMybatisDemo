@@ -1,0 +1,1 @@
+INSERT INTO 'addresslist' ('id', 'name', 'phone') values ('2', 'test1', '110');

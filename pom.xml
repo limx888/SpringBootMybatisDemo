@@ -149,6 +149,12 @@
             <artifactId>guava</artifactId>
             <version>21.0</version>
         </dependency>
+
+        <!--liquibase依赖-->
+        <dependency>
+            <groupId>org.liquibase</groupId>
+            <artifactId>liquibase-core</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
