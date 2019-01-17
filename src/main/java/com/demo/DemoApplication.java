@@ -14,10 +14,12 @@ import org.springframework.scheduling.TaskScheduler;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
+import org.springframework.web.socket.config.annotation.EnableWebSocket;
+import org.springframework.web.socket.server.standard.ServerEndpointExporter;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import tk.mybatis.spring.annotation.MapperScan;
 
-
+@EnableWebSocket
 @SpringBootApplication
 @EnableCaching
 @EnableSwagger2
@@ -54,5 +56,10 @@ public class DemoApplication {
     @Bean
     public CacheKeyGenerator cacheKeyGenerator() {
         return new LockKeyGenerator();
+    }
+
+    @Bean
+    public ServerEndpointExporter serverEndpointExporter() {
+        return new ServerEndpointExporter();
     }
 }
