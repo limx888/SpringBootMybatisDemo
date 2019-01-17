@@ -1,1 +1,1 @@
-INSERT INTO 'addresslist' ('id', 'name', 'phone') values ('2', 'test1', '110');
+INSERT INTO `addresslist` (`id`, `name`, `phone`) VALUES ('2', '哈哈', '18222222222');
