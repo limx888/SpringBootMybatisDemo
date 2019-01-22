@@ -112,6 +112,7 @@ public class ShiroConfiguration {
         filterChainDefinitionMap.put("/resource/**", "anon");
         filterChainDefinitionMap.put("/install", "anon");
         filterChainDefinitionMap.put("/hello", "anon");
+        filterChainDefinitionMap.put("/login", "authc");
         // anon：它对应的过滤器里面是空的,什么都没做
         log.info("##################从数据库读取权限规则，加载到shiroFilter中##################");
 
@@ -119,7 +120,8 @@ public class ShiroConfiguration {
         Map<String, String> permissions = new LinkedHashMap<>();
         permissions.put("/users/find", "perms[user:find]");
         filterChainDefinitionMap.putAll(permissions);
-        filterChainDefinitionMap.put("/**", "authc");
+        //注释掉所有接口安全验证
+        //filterChainDefinitionMap.put("/**", "authc");
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
     }
 }
